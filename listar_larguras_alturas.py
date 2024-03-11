@@ -26,7 +26,6 @@ print("Verificador de código de barras...")
 # LOOP PRINCIPAL DO PROGRAMA
 
 while True:
-  
     # Lê a variável digitada pelo usuário
     comando = input("Digite o valor do codigo de barras: ")
 
@@ -39,17 +38,12 @@ while True:
     # Exibe mensagem de confirmação de envio para o Arduino
     print(f"Enviado - {comando}")
 
-    # Neste trecho, aguardamos a resposta do Arduino. Estamos lendo cada linha de resposta do Arduino; 
-
-    resposta = ""
-    while True:
-        resposta_atual = ser.readline().decode() #ser.readline() lê uma linha de dados da porta serial, e decode() converte os bytes lidos em uma string Unicode.
-        resposta += resposta_atual # Concatenando a resposta atual à variável resposta. Isso nos permite acumular todas as respostas recebidas do Arduino em uma única string.
-        print(resposta_atual.strip())  # Imprime a resposta atual sem espaços em branco. O método strip() remove os espaços em branco (incluindo espaços, tabulações e novas linhas) do início e do fim da string.
-        
-        # Verifica se a resposta atual começa com informação de "altura" e, caso seja isso mesmo, continua a execução do programa
-        if resposta_atual.startswith("Altura:"):
-            break
+    # Lê a resposta do Arduino até encontrar a informação de "Altura"
+    
+    resposta = "" #Inicializa variável resposta como uma string vazia. Será utilizada para armazenar a resposta do arduino
+    while not resposta.startswith("Altura:"): #Loop while enquanto a string não começar com "Altura"
+        resposta = ser.readline().decode().strip() 
+        print(resposta) #Imprime a resposta atual do Aduino
 
     # Lê se o usuário deseja continuar
     continuar = input("Digite se deseja continuar... 1 para Sim, 0 para Não: ")
@@ -57,12 +51,20 @@ while True:
     # Se o valor de continuar for diferente de 1 encerra o programa
     if continuar != '1': 
         break
-        
+
 # ----------------------------------------------------------------------------------------------------------------------------------
 
 # Fechar a conexão com a porta serial
 ser.close()
 
 print("Programa encerrado.")
+
+# ----------------------------------------------------------------------------------------------------------------------------------
+
+#OBSERVAÇÕES
+
+#ser.readline() lê uma linha de dados da porta serial
+#.decode() converte os bytes lidos em uma string unicode
+#remove espaços em branco do inicio e do fim da sring
 
 
