@@ -1,5 +1,4 @@
 #Programa : Comunicacao Raspberry e Arduino
-#Autor : MakerHero
 
 #Execute os codigos abaixo no terminal do Raspbian para configurar a porta serial ttyACM0 corretamente
 #sudo systemctl mask serial-getty@ttyAMAO.service
